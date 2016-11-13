@@ -14,7 +14,7 @@ extension Reactive where Base: UITextField {
 	///   see `continuousTextValues`.
 	public var textValues: Signal<String?, NoError> {
 		return trigger(for: .editingDidEnd)
-			.map { [unowned base = self.base] in base.text }
+			.map { [unowned base = self.base] _ in base.text }
 	}
 
 	/// A signal of text values emitted by the text field upon any changes.
@@ -22,6 +22,6 @@ extension Reactive where Base: UITextField {
 	/// - note: To observe text values only when editing ends, see `textValues`.
 	public var continuousTextValues: Signal<String?, NoError> {
 		return trigger(for: .editingChanged)
-			.map { [unowned base = self.base] in base.text }
+			.map { [unowned base = self.base] _ in base.text }
 	}
 }

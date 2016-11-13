@@ -80,5 +80,20 @@ class UIControlSpec: QuickSpec {
 			expect(control.isEnabled) == false
 			expect(control.isSelected) == false
 		}
+
+		it("should send UIControlEvents via `trigger(for:)`") {
+			let triggeringEvents: UIControlEvents = [.touchUpInside, .touchUpOutside]
+			let sendingEvents: UIControlEvents = .touchUpInside
+			var sentEvents: UIControlEvents?
+
+			control.reactive.trigger(for: triggeringEvents)
+				.observeValues { controlEvents in
+					sentEvents = controlEvents
+				}
+
+			control.sendActions(for: sendingEvents)
+
+			expect(sentEvents) == triggeringEvents	// Note: not equal to `sendingEvents`
+		}
 	}
 }
